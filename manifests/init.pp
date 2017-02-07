@@ -1,48 +1,17 @@
-# Class: solaris_ndd
-# ===========================
-#
-# Full description of class solaris_ndd here.
-#
-# Parameters
-# ----------
-#
-# Document parameters here.
-#
-# * `sample parameter`
-# Explanation of what this parameter affects and what it defaults to.
-# e.g. "Specify one or more upstream ntp servers as an array."
-#
-# Variables
-# ----------
-#
-# Here you should define a list of variables that this module would require.
-#
-# * `sample variable`
-#  Explanation of how this variable affects the function of this class and if
-#  it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#  External Node Classifier as a comma separated list of hostnames." (Note,
-#  global variables should be avoided in favor of class parameters as
-#  of Puppet 2.6.)
-#
-# Examples
-# --------
-#
-# @example
-#    class { 'solaris_ndd':
-#      servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#    }
-#
-# Authors
-# -------
-#
-# Author Name <author@domain.com>
-#
-# Copyright
-# ---------
-#
-# Copyright 2017 Your name here, unless otherwise noted.
-#
-class solaris_ndd {
+define solaris_ndd(
+  $key = $title,
+  $value,
+) {
 
+  if $key.match(/.+->.+/) {
+    $key_split = split($key, '->')
 
+    exec { "ndd ${key}":
+      command => "ndd -set ${key_split[0]} ${key_split[1]} ${value}",
+      unless  => "ndd -get ${key_split[0]} ${key_split[1]} | grep ${value}",
+      path    => [ "/usr/bin", "/usr/sbin", "/bin", "/sbin"],
+    }
+  } else {
+    fail("Incorrect Key format for :'${key}, needs to be driver->parameter, eg /dev/ip->ip_forward_src_routed")
+  }
 }
