@@ -1,3 +1,10 @@
+# Solaris_ndd
+#
+# set solaris dirver configuration with puppet (kernel tuning)
+#
+# @param key Item to change in format DRIVER->PARAMETER, eg
+#   /dev/ip->ip_forward_src_routed, defaults to $title
+# @param value Value to set the parameter to (interpolated into string) 
 define solaris_ndd(
   $key = $title,
   $value,
