@@ -1,6 +1,6 @@
 {
   "name": "geoffwilliams-solaris_ndd",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "geoffwilliams",
   "summary": "set solaris driver configuration with puppet (kernel tuning)",
   "license": "Apache-2.0",

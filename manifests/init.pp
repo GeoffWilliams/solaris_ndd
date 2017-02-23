@@ -19,7 +19,7 @@ define solaris_ndd(
 
     # remove any _add or _del to check array data keys, we should still keep
     # these to write though
-    $read_key = regsubst($key_split[1], /(_add|_del)/, "", "G")
+    $read_key = regsubst($key_split[1], /(_add|_del)$/, "", "G")
 
     exec { "ndd ${key}":
       command => "ndd -set ${key_split[0]} ${key_split[1]} ${value}",
